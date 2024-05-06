@@ -1,0 +1,54 @@
+<div class="mt-8 mb-8">
+  <!-- Page Heading -->
+  <h1 class="text-4xl font-bold text-center">User Info</h1>
+
+  <!-- User Information Display -->
+  <div class="w-full mt-5">
+    <div class="grid grid-cols-12">
+      <div class="col-span-2"></div>
+      <div class="col-span-8 form-container border border-solid rounded-xl p-7">
+        <div class="grid grid-cols-12">
+          <div class="col-span-4 text-base font-bold">Name:</div>
+          <div class="col-span-8">{{ person?.name | uppercase }}</div>
+        </div>
+
+        <div class="grid grid-cols-12 mt-4">
+          <div class="col-span-4 text-base font-bold">Email:</div>
+          <div class="col-span-8">{{ person?.email | lowercase }}</div>
+        </div>
+
+        <div class="grid grid-cols-12 mt-4">
+          <div class="col-span-4 text-base font-bold">Role:</div>
+          <div class="col-span-8">{{ person?.role | customPipe }}</div>
+        </div>
+
+        <form #userForm="ngForm" (ngSubmit)="updateName()">
+          <div class="grid grid-cols-12 mt-4 justify-center">
+            <div class="col-span-2"></div>
+            <div class="col-span-5">
+              <mat-form-field class="w-full">
+                <mat-label>Update Name</mat-label>
+                <input
+                  #name
+                  matInput
+                  placeholder="Name"
+                  [(ngModel)]="newName"
+                  name="newName"
+                  value="person?.name"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-span-2"></div>
+
+            <div class="col-span-2 text-base font-bold mt-3">
+              <button mat-stroked-button color="primary" type="submit">
+                Update
+              </button>
+            </div>
+            <div class="col-span-2"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,196 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+  [fullScreen]="true"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="flex flex-col min-h-full bg-gray-100">
+  <div class="p-16">
+    <div class="mt-5 mb-5 text-2xl">Users</div>
+
+    <mat-card>
+      <mat-card-content>
+        <div>
+          <div class="overflow-x-auto">
+            <div *ngIf="!dataSource?.data?.length" class="text-center">
+              <h2>No user Found!</h2>
+            </div>
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              matSort
+              class="mat-elevation-z8"
+              *ngIf="dataSource?.data?.length"
+            >
+              <div>
+                <ng-container matColumnDef="first_name">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by first_name"
+                  >
+                    Name
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.first_name }} {{ element.last_name }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by email"
+                  >
+                    Email
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.email }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="contact_number">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by contact_number"
+                  >
+                    Contact Number
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.contact_number }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="birth_date">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by Birth-date"
+                  >
+                    Birth-Date
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.birth_date | date : "dd/MM/yyyy" }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="FK_company_name">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by Company Name"
+                  >
+                    Company
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.tbl_company.company_name }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="FK_role_name">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    sortActionDescription="Sort by Role Name"
+                  >
+                    Role
+                  </th>
+                  <td id="role" mat-cell *matCellDef="let element">
+                    {{ element.tbl_role.role_name }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="active">
+                  <th mat-header-cell *matHeaderCellDef>Active</th>
+
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <div class="flex" id="none">
+                      <button
+                        title="Active user"
+                        mat-icon-button
+                        *ngIf="element.is_active"
+                        (click)="handleChangeActiveStatus(element)"
+                      >
+                        <mat-icon matTooltip="Active user" style="color: green"
+                          >check</mat-icon
+                        >
+                      </button>
+
+                      <button
+                        title="Deactivate user"
+                        mat-icon-button
+                        *ngIf="!element.is_active"
+                        (click)="handleChangeActiveStatus(element)"
+                      >
+                        <mat-icon style="color: red">clear</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <div class="flex" id="none">
+                      <button mat-icon-button (click)="handleUserEdit(element)">
+                        <mat-icon id="none" color="primary">edit</mat-icon>
+                      </button>
+
+                      <button
+                        mat-icon-button
+                        (click)="handleUserDelete(element.user_id)"
+                      >
+                        <mat-icon color="warn">delete</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  title="Edit User"
+                  (click)="handleRowClick(row)"
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </div>
+            </table>
+          </div>
+
+          <mat-paginator
+            [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons
+            aria-label="Select page of users elements"
+          >
+          </mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <button
+      title="Add user"
+      color="primary"
+      class="shadow-xl fixed bottom-3 right-3 w-12 h-12 bg-slate-600 hover:bg-slate-800 text-white rounded-full flex items-center justify-center"
+      (click)="openAddUserDialog()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

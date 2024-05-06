@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  cursor: pointer;
+  background-color: rgb(221, 221, 221);
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}

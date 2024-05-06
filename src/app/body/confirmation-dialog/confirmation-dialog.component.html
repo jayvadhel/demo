@@ -1,0 +1,30 @@
+<div class="bg-slate-500 flex items-center">
+  <h1 mat-dialog-title class="text-white text-lg font-bold">
+    {{ data?.title }}
+  </h1>
+</div>
+
+<mat-dialog-content>
+  {{ data?.message }}
+</mat-dialog-content>
+
+<mat-dialog-content>
+  <div class="flex justify-end">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="font-bold py-2 px-4 rounded bg-slate-100 hover:bg-slate-200 text-slate-500 mr-2"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+    <button
+      mat-button
+      color="primary"
+      class="font-bold py-2 px-4 rounded bg-slate-500 hover:bg-slate-600 text-white mr-2"
+      (click)="onConfirm()"
+    >
+      Confirm
+    </button>
+  </div>
+</mat-dialog-content>

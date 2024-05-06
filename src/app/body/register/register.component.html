@@ -1,0 +1,212 @@
+<div class="mt-8 mb-8 wrapper">
+  <h1 class="text-4xl font-bold text-center">Reactive Form</h1>
+  <div class="w-full mt-5">
+    <div class="grid grid-cols-12">
+      <div class="col-span-2"></div>
+      <div class="col-span-8 form-container border border-solid rounded-xl p-7">
+        <div class="grid grid-cols-12">
+          <div class="col-span-2"></div>
+          <div class="col-span-10">
+            <form
+              #myForm
+              [formGroup]="person"
+              (ngSubmit)="submit(name)"
+              novalidate
+            >
+              <div class="grid grid-cols-12">
+                <div class="col-span-4 text-base font-bold">Name :</div>
+                <div class="col-span-6">
+                  <mat-form-field style="width: 100%; height: max-content">
+                    <mat-label>Name</mat-label>
+                    <input
+                      #name
+                      matInput
+                      placeholder="Name"
+                      formControlName="name"
+                      required
+                    />
+                    <mat-error
+                      class="error"
+                      *ngIf="
+                        person.controls['name'].touched &&
+                        person.controls['name'].errors?.['name']
+                      "
+                      >Name is required</mat-error
+                    >
+                    <mat-error *ngIf="person.get('name')?.errors?.['required']"
+                      >Name is required.</mat-error
+                    >
+                    <mat-error *ngIf="person.get('name')?.errors?.['minlength']"
+                      >Name must be at least 2 characters long.</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12">
+                <div class="col-span-4 text-base font-bold">Email :</div>
+                <div class="col-span-6">
+                  <mat-form-field style="width: 100%">
+                    <mat-label>Email</mat-label>
+                    <input
+                      type="email"
+                      id="email"
+                      matInput
+                      placeholder="Email"
+                      formControlName="email"
+                      required
+                    />
+
+                    <mat-error *ngIf="person.get('email')?.errors?.['required']"
+                      >Email is required.</mat-error
+                    >
+                    <mat-error *ngIf="person.get('email')?.errors?.['email']"
+                      >Enter a valid Email Address.</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12">
+                <div class="col-span-4 text-base font-bold">Password :</div>
+                <div class="col-span-6">
+                  <mat-form-field style="width: 100%">
+                    <mat-label>Password</mat-label>
+                    <input
+                      type="password"
+                      id="password"
+                      matInput
+                      placeholder="Password"
+                      formControlName="password"
+                      required
+                    />
+
+                    <mat-error
+                      *ngIf="person.get('password')?.errors?.['required']"
+                      >Password is required.</mat-error
+                    >
+                    <mat-error
+                      *ngIf="person.get('password')?.errors?.['pattern']"
+                      >Enter strong password</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12">
+                <div class="col-span-4 text-base font-bold">
+                  Contact Number :
+                </div>
+                <div class="col-span-6">
+                  <mat-form-field style="width: 100%">
+                    <mat-label>Contact Number</mat-label>
+
+                    <input
+                      id="contact"
+                      matInput
+                      placeholder="Contact Number"
+                      formControlName="contact"
+                      required
+                    />
+                    <mat-error
+                      *ngIf="person.get('contact')?.errors?.['required']"
+                      >Contact Number is required.</mat-error
+                    >
+                    <mat-error
+                      *ngIf="person.get('contact')?.errors?.['pattern']"
+                      >Enter valid Contect Number</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12 mb-5">
+                <div class="col-span-4 text-base font-bold">Gender :</div>
+                <div class="col-span-6">
+                  <mat-radio-group
+                    color="primary"
+                    id="gender"
+                    formControlName="gender"
+                  >
+                    <mat-radio-button value="male">Male</mat-radio-button>
+                    <mat-radio-button value="female">Female</mat-radio-button>
+
+                    <mat-error
+                      *ngIf="person.controls['gender'].touched && person.get('gender')?.errors?.['required']"
+                      >Gender is required.</mat-error
+                    >
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12">
+                <div class="col-span-4 text-base font-bold">Birth Date :</div>
+                <div class="col-span-6">
+                  <mat-form-field style="width: 100%">
+                    <mat-label>Choose a date</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      formControlName="dob"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+
+                    <mat-error *ngIf="person.get('dob')?.errors?.['required']"
+                      >Date of birth is required.</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12">
+                <div class="col-span-4 text-base font-bold">Role :</div>
+                <div class="col-span-6">
+                  <mat-form-field style="width: 100%">
+                    <mat-label>Role</mat-label>
+
+                    <mat-select
+                      id="role"
+                      value="Please Select"
+                      placeholder="Select"
+                      formControlName="role"
+                      required
+                    >
+                      <mat-option *ngFor="let role of roles" [value]="role">{{
+                        role
+                      }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="person.get('role')?.errors?.['required']"
+                      >Role is required.</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="flex justify-center align-middle w-full">
+                <button
+                  mat-stroked-button
+                  [disabled]="person.invalid"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="show">
+    <app-usershow
+      [person]="values"
+      (sendDataToParent)="updateName($event)"
+    ></app-usershow>
+  </div>
+</div>
